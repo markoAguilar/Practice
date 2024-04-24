@@ -1,0 +1,273 @@
+:root {
+  --max-width: 700px;
+}
+
+* {
+  font-family: Sans-Serif;
+  color: white;
+  font-size: 16pt;
+  background-size: cover;
+  margin: 0;
+  /*** Also note the -webkit- prefix and its purpose ***/
+  animation: slidein 60s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+main {
+  background-image: url("Images/backdrop.png");
+  background-color: black;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+/***
+ * slide in animation slowly slides in element from left to right and then right
+ * to left ***/
+@keyframes slidein {
+  from {
+    background-position: top;
+    background-size: 3000px;
+  }
+  to {
+    background-position: -100px 0px;
+    background-size: 2750px;
+  }
+}
+
+.navbar-container {
+  background: rgb(0, 0, 35);
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /*** makes navbar stay on top when scrolling 
+   * use z-index when positiong other elements ***/
+  -webkit-position: sticky;
+  position: sticky;
+  top: 0;
+}
+
+.navbar-thumbnail-container {
+  width: 10%;
+
+  /***
+   * positioning relative to its own default position
+   * children of .navbar-thumbnail-container  using absolute positioning will now position
+   * based off of thumbnail position. ***/
+  position: relative;
+}
+
+.thumb-text {
+  position: absolute;
+  word-wrap: break-word;
+  font-family: comic sans ms;
+  font-size: 18pt;
+  color: lightblue;
+  text-shadow: 1px 1px yellow;
+  text-outline: 1px red;
+}
+
+.thumb-text-top {
+  /***
+   * position absolute will position thumb-text-top based on the ancestor element
+   * .navbar-thumbnail-container  position. Other valid ancestor positions are relative and
+   * fixed. if parent is fixed element does not scroll with document ***/
+  left: 20%;
+  z-index: 4;
+}
+
+.thumb-text-bottom {
+  top: 70px;
+  left: 15%;
+  z-index: 7;
+}
+
+.thumb-images {
+  width: 100%;
+  height: 100%;
+}
+
+.thumb-images img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+/*** stars ***/
+.thumb-images img:nth-of-type(1) {
+  height: 100px;
+  width: 130px;
+}
+
+/***
+ * Custom sizing and placing for the pokeball image 
+ * position was already set to absolute with 100% default height and width. ***/
+.thumb-images img:nth-of-type(2) {
+  height: 70px;
+  width: 70px;
+
+  top: 10%;
+  left: 25%;
+}
+
+main > h1,
+h2 {
+  text-align: left;
+  width: var(--max-width);
+  height: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: rgb(0, 0, 35);
+}
+main > h1 {
+  margin-top: 20px;
+  border-bottom: solid 5px orange;
+  border-right: solid 5px orange;
+  border-left: solid 5px black;
+}
+
+main > h2 {
+  border-left: solid 5px lightblue;
+  border-right: solid 5px black;
+}
+
+.grid-container {
+  display: flex;
+  width: var(--max-width);
+  height: 1000px;
+  background: rbg(0, 0, 50);
+  margin-bottom: 20px;
+  border-left: solid 5px black;
+  border-right: solid 5px black;
+}
+
+/*** GRID STYLING ***/
+
+/***
+ * set display to grid to make div a grid layout
+ * default is block container, use 'inline-grid' for inline container
+ * every child element is now a grid item that is by default placed into a
+ * single grid cell */
+.grid {
+  display: grid;
+  background-color: rgb(0, 0, 50);
+  width: 100%;
+  height: 100%;
+
+  /*** makes cells stretch to fill gird container width ***/
+  justify-content: stretch;
+
+  /*** vertical height alignment - set stretch to fill vertical space ***/
+  /*** other options: start end center space-around space-between space-evenly*/
+  align-content: stretch;
+
+  /*** explicit width of each column ***/
+  grid-template-columns: 10% 90%;
+
+  /*** explicit height of each row ***/
+  grid-template-rows: 5% auto auto auto;
+
+  /***  below this class each cell has been asigned a grid-area attribute name
+   * and their position has been assigned in the following grid-tempate-areas
+   * property. Each row is a string of child grid-area values ***/
+  grid-template-areas:
+    "header header"
+    "one oneInfo"
+    "two twoInfo"
+    "three threeInfo";
+
+  /*cell content declarations*/
+  /*justify-content: center;*/
+
+  /*** get familiar with this
+   * and how it differs from align-content***/
+  /*align-items: space-evenly;*/
+}
+
+/*** styling for all grid children cells ***/
+.grid div {
+  border: 0.4px solid lightgray;
+  background: rgb(0, 0, 50);
+  display: flex;
+  flex-grow: 1;
+  flex-flow: column;
+}
+
+/*** setting grid-area of each cell item 
+ * for use with grid-template-areas property in parent .grid class above ***/
+.grid-head {
+  /***
+   * other options (not preferred):
+   * grid-column: 1/3; or grid row and no use of grid-template-areas ***/
+  grid-area: header;
+
+  text-align: center;
+}
+
+/* horizontally and vertically align the grid numbers*/
+.grid > div:nth-of-type(even) {
+  justify-content: center;
+  align-items: center;
+}
+
+/* horizontally align the content, vertically align content to end of cell*/
+.grid > div:nth-of-type(odd) {
+  justify-content: center;
+  align-items: stretch;
+}
+
+.cell-one {
+  grid-area: one;
+}
+
+.cell-one-p {
+  grid-area: oneInfo;
+}
+
+.cell-one-p > img {
+  display: flex;
+}
+
+.cell-two {
+  grid-area: two;
+}
+
+.cell-two-p {
+  grid-area: twoInfo;
+}
+
+.cell-three {
+  grid-area: three;
+}
+
+.cell-three-p {
+  grid-area: threeInfo;
+}
+
+/*** GRID TRIGGERS ***/
+
+/*** hover trigger for each div***/
+.grid > div:nth-of-type(odd):hover {
+  animation: wiggle;
+  animation-duration: 500ms;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  border: none;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(2deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
